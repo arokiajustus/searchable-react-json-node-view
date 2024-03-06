@@ -11,5 +11,6 @@ yarn add searchable-react-json-node-view
 
 ### Example
 
-<kbd><img src="https://user-images.githubusercontent.com/16322616/89118875-1d5b2080-d4b2-11ea-81fe-514d019cb26b.png" width="450" /></kbd>
-![Alt text](search1.png)![Alt text](image.png)
+<kbd>(search1.png)</kbd>
+
+<kbd>(search2.png)</kbd>
