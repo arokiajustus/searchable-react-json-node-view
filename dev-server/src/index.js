@@ -10,10 +10,20 @@ import Moment from "moment"
 import JsonViewer from "./../../src/js/index"
 
 const App = () => {
-    const [search, setSearch] = React.useState('')
+    const [search, setSearch] = React.useState('');
+
+    const operationCallback = (editProps) => {
+        return true;
+    };
+
+    const searchTextKeydown = (event) => {
+        if (event.key === 'Enter') {
+        setSearch(event.target.value);
+        }
+    };
 
     return <div>
-        Search: <input value={search} onChange={e => setSearch(e.target.value)} />
+        Search: <input onKeyDown={searchTextKeydown} />
         <JsonViewer
             highlightSearch={search}
             highlightSearchColor={"yellow"}
@@ -24,6 +34,9 @@ const App = () => {
             name={false}
             displayDataTypes={false}
             collapsed={1}
+            onEdit={operationCallback}
+            onAdd={operationCallback}
+            onDelete={operationCallback}
             defaultValue=""
             theme={{
                 base00: 'rgba(0, 0, 0, 0)',

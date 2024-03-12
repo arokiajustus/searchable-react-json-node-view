@@ -12,7 +12,6 @@ import ObjectName from './../ObjectName';
 
 //helpers
 import getActualHighlightSearch from './../../helpers/getActualHighlightSearch';
-import focusHighlightWord from './../../helpers/focusHighlightWord';
 
 //attribute store
 import AttributeStore from './../../stores/ObjectAttributes';
@@ -36,15 +35,6 @@ class RjvObject extends React.PureComponent {
             ...state,
             prevProps: {}
         };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.highlightSearch !== "") {
-            const highlightCurrentSearchColor = this.props.highlightSearchColor;
-            setTimeout(function() {
-                focusHighlightWord(highlightCurrentSearchColor);
-            }, 20);
-        }
     }
 
     static getState = props => {

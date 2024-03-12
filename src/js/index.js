@@ -5,6 +5,7 @@ import AddKeyRequest from './components/ObjectKeyModal/AddKeyRequest';
 import ValidationFailure from './components/ValidationFailure';
 import {toType, isTheme} from './helpers/util';
 import ObjectAttributes from './stores/ObjectAttributes';
+import focusHighlightWord from './helpers/focusHighlightWord';
 
 //global theme
 import Theme from './themes/getStyle';
@@ -131,9 +132,13 @@ class ReactJsonView extends React.PureComponent {
             );
         }
 
-        if (this.props.highlightSearch != "") {
+        if (this.props.highlightSearch !== "" && prevProps.highlightSearch !== this.props.highlightSearch) {
             const warningSpan = document.getElementById('warning-msg');
             warningSpan.textContent = "Searching...";
+            const highlightCurrentSearchColor = this.props.highlightSearchColor;
+            setTimeout(function() {
+                focusHighlightWord(highlightCurrentSearchColor);
+            }, 20);
         }
     }
 
