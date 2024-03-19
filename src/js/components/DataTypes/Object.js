@@ -12,6 +12,7 @@ import ObjectName from './../ObjectName';
 
 //helpers
 import getActualHighlightSearch from './../../helpers/getActualHighlightSearch';
+import getFormattedHighlightSearch from './../../helpers/getFormattedHighlightSearch';
 
 //attribute store
 import AttributeStore from './../../stores/ObjectAttributes';
@@ -191,7 +192,8 @@ class RjvObject extends React.PureComponent {
 
         const { object_type, expanded } = this.state;
         const objectContainingSearch = rest.highlightSearch && 
-            JSON.stringify(src).toLowerCase().includes(getActualHighlightSearch(rest.highlightSearch));
+            JSON.stringify(src).toLowerCase().includes(getActualHighlightSearch(rest.highlightSearch)) && 
+            getFormattedHighlightSearch(rest.highlightSearch).includes(this.props.namespace.join(".").toLowerCase());
 
         let styles = {};
         if (!jsvRoot && parent_type !== 'array_group') {

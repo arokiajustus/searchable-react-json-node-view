@@ -10,6 +10,7 @@ import { CollapsedIcon, ExpandedIcon } from './ToggleIcons';
 
 //helper
 import getActualHighlightSearch from './../helpers/getActualHighlightSearch';
+import getFormattedHighlightSearch from './../helpers/getFormattedHighlightSearch';
 
 //single indent is 5px
 const SINGLE_INDENT = 5;
@@ -39,7 +40,10 @@ export default class extends React.PureComponent {
         const expandedGroups = {};
         for (let i in [...Array(groups)]) {
             const groupSrc = this.props.src.slice(i * size, i * size + size)
-            const groupContainingSearch = this.props.highlightSearch && JSON.stringify(groupSrc).toLowerCase().includes(getActualHighlightSearch(this.props.highlightSearch.toLowerCase()));
+            const groupContainingSearch = 
+                this.props.highlightSearch &&
+                JSON.stringify(groupSrc).toLowerCase().includes(getActualHighlightSearch(this.props.highlightSearch.toLowerCase())) && 
+                getFormattedHighlightSearch(this.props.highlightSearch).includes(this.props.namespace.join(".").toLowerCase());
             if (groupContainingSearch) {
                 expandedGroups[i] = true;
             }

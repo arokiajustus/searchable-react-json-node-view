@@ -8,6 +8,7 @@ import Theme from './../../themes/getStyle';
 
 //helpers
 import getActualHighlightSearch from './../../helpers/getActualHighlightSearch';
+import getFormattedHighlightSearch from './../../helpers/getFormattedHighlightSearch';
 import searchMatch from './../../helpers/searchMatch';
 
 //attribute store for storing collapsed state
@@ -47,7 +48,9 @@ export default class extends React.PureComponent {
         let collapsible = toType(collapseStringsAfterLength) === 'integer';
         let style = { cursor: 'default' };
 
-        if (props.highlightSearch && `"${value}"`.toLowerCase().includes(getActualHighlightSearch(props.highlightSearch))) {
+        if (props.highlightSearch && 
+            `"${value}"`.toLowerCase().includes(getActualHighlightSearch(props.highlightSearch)) &&
+            getFormattedHighlightSearch(props.highlightSearch).includes(props.namespace.join(".").toLowerCase())) {
             return <div {...Theme(theme, 'string')}>
                 <DataTypeLabel type_name={type_name} {...props} />
                 {splitAndPushByDelimiter(`"${value}"`, props.highlightSearch).map((word, i) => [

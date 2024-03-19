@@ -133,8 +133,8 @@ class ReactJsonView extends React.PureComponent {
         }
 
         if (this.props.highlightSearch !== "" && prevProps.highlightSearch !== this.props.highlightSearch) {
-            const warningSpan = document.getElementById('warning-msg');
-            warningSpan.textContent = "Searching...";
+            // const warningSpan = document.getElementById('warning-msg');
+            // warningSpan.textContent = "Searching...";
             const highlightCurrentSearchColor = this.props.highlightSearchColor;
             setTimeout(function() {
                 focusHighlightWord(highlightCurrentSearchColor);

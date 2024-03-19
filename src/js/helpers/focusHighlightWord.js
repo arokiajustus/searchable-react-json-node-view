@@ -15,6 +15,6 @@ export default function focusHighlightSearch(bgColor) {
         matchingElements[0].focus();
         warningSpan.textContent = "";
     } else {
-         warningSpan.textContent = "Given node is not found";
+         warningSpan.textContent = "Given TCA is not found";
     }
 }
