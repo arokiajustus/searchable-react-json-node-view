@@ -27,14 +27,15 @@ import Theme from './../../themes/getStyle';
 const DEPTH_INCREMENT = 1;
 //single indent is 5px
 const SINGLE_INDENT = 5;
-
+// added manualcollapsed state to maintain manually collapsed the expanded node which has search text
 class RjvObject extends React.PureComponent {
     constructor(props) {
         super(props);
         const state = RjvObject.getState(props);
         this.state = {
             ...state,
-            prevProps: {}
+            prevProps: {},
+            manualcollapsed: false
         };
     }
 
@@ -61,6 +62,7 @@ class RjvObject extends React.PureComponent {
             ),
             object_type: props.type === 'array' ? 'array' : 'object',
             parent_type: props.type === 'array' ? 'array' : 'object',
+            manualcollapsed: false,
             size
         };
         return state;
@@ -83,9 +85,10 @@ class RjvObject extends React.PureComponent {
         return null;
     }
 
-    toggleCollapsed = () => {
+    toggleCollapsed = (expandState) => {
         this.setState({
-            expanded: !this.state.expanded
+            expanded: (expandState ? !expandState : !this.state.expanded),
+            manualcollapsed: true
         }, () => {
             AttributeStore.set(
                 this.props.rjvId,
@@ -154,7 +157,7 @@ class RjvObject extends React.PureComponent {
             <span>
                 <span
                     onClick={e => {
-                        this.toggleCollapsed();
+                        this.toggleCollapsed(expanded);
                     }}
                     {...Theme(theme, 'brace-row')}
                 >
@@ -190,8 +193,8 @@ class RjvObject extends React.PureComponent {
             ...rest
         } = this.props;
 
-        const { object_type, expanded } = this.state;
-        const objectContainingSearch = rest.highlightSearch && 
+        const { object_type, expanded, manualcollapsed } = this.state;
+        const objectContainingSearch = !manualcollapsed && rest.highlightSearch && 
             JSON.stringify(src).toLowerCase().includes(getActualHighlightSearch(rest.highlightSearch)) && 
             getFormattedHighlightSearch(rest.highlightSearch).includes(this.props.namespace.join(".").toLowerCase());
 
@@ -208,7 +211,7 @@ class RjvObject extends React.PureComponent {
                 class="object-key-val"
                 {...Theme(theme, jsvRoot ? 'jsv-root' : 'objectKeyVal', styles)}
             >
-                {this.getBraceStart(object_type, expanded)}
+                {this.getBraceStart(object_type, (expanded || objectContainingSearch) ? true : false)}
                 {expanded || objectContainingSearch
                     ? this.getObjectContent(depth, src, {
                         theme,
@@ -220,12 +223,12 @@ class RjvObject extends React.PureComponent {
                     <span
                         style={{
                             ...Theme(theme, 'brace').style,
-                            paddingLeft: expanded ? '3px' : '0px'
+                            paddingLeft: (expanded || objectContainingSearch) ? '3px' : '0px'
                         }}
                     >
                         {object_type === 'array' ? ']' : '}'}
                     </span>
-                    {expanded ? null : this.getObjectMetaData(src)}
+                    {(expanded || objectContainingSearch) ? null : this.getObjectMetaData(src)}
                 </span>
             </div>
         );

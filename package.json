@@ -1,7 +1,7 @@
 {
   "name": "searchable-react-json-node-view",
   "description": "Interactive react component for displaying javascript arrays and JSON objects.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/main.js",
   "dependencies": {
     "flux": "^3.1.3",
